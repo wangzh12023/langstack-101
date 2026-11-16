@@ -98,9 +98,21 @@ struct Big h(void);
 
 参数方向的小结构体按字段拆分进可用的整数/XMM 寄存器；拆分失败则整颗入栈。精确到每个字段的八字节分类以 ABI 文档的 ALGORITHM 为准；能陈述「\(\leq 16\) 可走寄存器、更大走隐藏指针」即可定位大多数反汇编现象。
 
+## 口试叙事示例
+
+给定：
+
+```c
+double h(double x, double y, long n);
+```
+
+调用方在 `call h` 之前：`%xmm0=x`，`%xmm1=y`，`%rdi=n`，且 \(\texttt{rsp} \equiv 0 \pmod{16}\)。`call` 压入返回地址后进入 `h`，此时 \(\texttt{rsp} \equiv 8 \pmod{16}\)，`(%rsp)` 为返回地址。若 `h` 为叶子并只用红区与 caller-saved 寄存器，可无 `subq`；若 `h` 还调用别人，须调整 `%rsp` 并保存用到的 callee-saved。返回时标量结果在 `%xmm0`，`ret` 弹出返回地址。把这一段与 [栈帧](stack-frames.md) 的图合说，即覆盖口试量规第 1 题的主干。
+
+再对照整数版 `long f(long a, long b)`：参数在 `%rdi`/`%rsi`，返回在 `%rax`；其余栈对齐与保存责任相同。浮点与整数寄存器分别编号：混传时各自从 `%xmm0`、`%rdi` 起算，互不挤占对方的槽位。
+
 ## 与调用相关的其余约定
 
-线程局部访问属于 ABI 的延伸，见 [TLS](tls.md)。系统调用使用另一套寄存器约定（`%rax` 为号，参数在 `%rdi`…`%r9`，经 `syscall`），与用户态 `call` 分立，见 [系统调用路径](syscalls.md)。
+线程局部访问属于 ABI 的延伸，见 [TLS](tls.md)。系统调用使用另一套寄存器约定（`%rax` 为号，参数在 `%rdi`…`%r9`，经 `syscall` 指令陷入内核），与用户态 `call` 分立：不压返回地址到用户栈，返回地址在 `RCX`（`syscall` 硬件行为），`R11` 保存 `RFLAGS`；详见 [系统调用路径](syscalls.md)。
 
 ## AArch64 AAPCS64 对照
 
