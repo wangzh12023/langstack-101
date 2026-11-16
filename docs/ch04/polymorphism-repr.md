@@ -26,6 +26,16 @@ flowchart LR
   end
 ```
 
+## 并排计数间接层
+
+| 形态 | 引用/对象上多带什么 | 一次方法调用典型路径 |
+| --- | --- | --- |
+| C++ 虚函数 | 对象内 vptr | load vptr → load 函数指针 → indirect call；`this` 已在对象里 |
+| Go interface | 接口值：类型信息 + 数据指针 | 从类型信息取方法地址 → indirect call；具体值可能已装箱 |
+| Rust `dyn Trait` | 胖指针：data + vtable | 从胖指针第二字取 vtable → load 方法 → indirect call |
+
+C++ 把派发指针存在对象头侧；Rust 把 vtable 指针存在引用侧，对象可为朴素布局（便于嵌入与 FFI）。Go 的接口值本身就是双字，赋值给接口的转换成本要单独算。对象头里还有哪些字段见 [对象表示与运行时布局](object-layout.md)。
+
 ## 静态派发对照
 
 模板/泛型单态化、`final`、去虚化分析成功时，调用可变成直接 `call` 甚至内联，间接层消失。讨论「零成本抽象」时，要问最终是否还留下 vptr 负载；讨论 JS 引擎时，内联缓存（IC）用另一套机制把「看似动态」的调用在稳态下打到近直连路径——见 JavaScript 分论。
