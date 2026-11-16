@@ -61,4 +61,4 @@ opt -O2 -S -o fib.opt.ll fib.raw.ll
 | 递归调用 | 两个清晰 `call` | 仍可能保留双调用；或伴随其他简化 |
 | 调试（加 `-g`） | 变量位置稳定 | 易出现 optimized out，见 [DWARF](debug-dwarf.md) |
 
-合法性提醒：优化在有定义行为上遵守 as-if；本函数对正常 `n` 有定义，对照的是表示形式而非「算错结果」。中端类别说明见 [中端优化管线](midend-passes.md)；后端如何把虚拟寄存器收成物理寄存器见 [指令选择与寄存器分配](backend-isel-ra.md)。
+本函数对正常 `n` 有定义；对照的是表示形式（栈槽、寄存器、调用序列），结果应遵守 as-if。中端类别说明见 [中端优化管线](midend-passes.md)；后端如何把虚拟寄存器收成物理寄存器见 [指令选择与寄存器分配](backend-isel-ra.md)。

@@ -28,4 +28,23 @@ TBAA（type-based alias analysis）元数据按语言类型分层描述「这两
 2. **`noalias` / `restrict`**：两个形参指针标成不别名后，对 `*p` 与 `*q` 的读写可重排或缓存到寄存器，即使源码文本顺序相反。  
 3. **`lifetime.end` 后的槽位**：前端结束生命周期后，同一栈槽可被复用；源级「变量 A」与「变量 B」在 asm 里共用地址，调试器按名字看会错位。
 
+口试可直接指认下面两段 IR。第一段里语言级「有符号不溢出」只剩指令旗标；第二段里「两指针不别名」只剩参数属性（还可再附 TBAA 元数据）。
+
+```llvm
+; C: int f(int x) { return x + 1; }  — 有符号加，前端标 nsw
+define i32 @f(i32 %x) {
+  %1 = add nsw i32 %x, 1
+  ret i32 %1
+}
+```
+
+```llvm
+; C: void g(int *restrict p, int *restrict q) { *p = 1; *q = 2; }
+define void @g(ptr noalias %p, ptr noalias %q) {
+  store i32 1, ptr %p
+  store i32 2, ptr %q
+  ret void
+}
+```
+
 争论优化是否合法时，先问前端在 IR 上留下了什么假定，再看最终汇编像不像源码。

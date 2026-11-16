@@ -21,4 +21,4 @@ flowchart LR
 
 ## 深度边界
 
-本章目标是**读懂与解释**，不是向 LLVM 贡献后端。指令选择与寄存器分配讲问题和经典思路；TableGen 与 MachineInstr 细节只在后端页末节点到存在性。JIT（ORC 等）在 [求值与执行模型](../ch04/evaluation.md) 里从语言实现角度出现，不在这里铺 API。
+本章目标是读懂与解释。指令选择与寄存器分配讲问题和经典思路；TableGen 与 MachineInstr 细节只在后端页末节点到存在性。JIT（ORC 等）在 [求值与执行模型](../ch04/evaluation.md) 里从语言实现角度出现，不在这里铺 API。
