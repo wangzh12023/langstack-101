@@ -41,14 +41,16 @@ _start:
     syscall
 ```
 
-```bash
-as -o fib.o fib.s
-as -o main.o main.s
-ld -o fib main.o fib.o
-./fib; echo $?    # 55
-objdump -d fib
-objdump -dr fib.o
-```
+!!! note "实验步骤"
+
+    ```bash
+    as -o fib.o fib.s
+    as -o main.o main.s
+    ld -o fib main.o fib.o
+    ./fib; echo $?    # 55
+    objdump -d fib
+    objdump -dr fib.o
+    ```
 
 ## 与 C 对照
 
