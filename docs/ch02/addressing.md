@@ -46,7 +46,7 @@ disp(%base, %index, scale)
 - `(%rsp)`、`disp(%rsp)` 必须带 SIB（硬件用 index=`%rsp` 的编码表示「无变址」）。
 - `(%rip)` 相对形式不走「base=RIP」的通用寄存器编码，而走 ModR/M 的特殊 RIP-relative 槽位，位移为相对**下一条指令**的有符号偏移。
 
-因此 `%rsp` 作基址、RIP-relative 取全局量、以及 `(%rax,%rbx,4)` 在反汇编字节列上的长度不同。 systematically 读字节的方法见 [指令编码与 RIP 相对寻址](encoding-rip-relative.md)。
+因此 `%rsp` 作基址、RIP-relative 取全局量、以及 `(%rax,%rbx,4)` 在反汇编字节列上的长度不同。按字段读字节的方法见 [指令编码与 RIP 相对寻址](encoding-rip-relative.md)。
 
 ## 数据传送与符号扩展
 
