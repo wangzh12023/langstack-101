@@ -1,0 +1,174 @@
+site_name: 语言栈 101
+site_description: 汇编、编译器、运行时与主流语言实现
+site_author: Zihan
+site_url: https://localhost/langstack-101/
+repo_name: langstack-101
+copyright: Available freely for personal study.
+
+theme:
+  name: material
+  language: zh
+  font: false
+  palette:
+    - scheme: default
+      media: "(prefers-color-scheme: light)"
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换至深色模式
+    - scheme: slate
+      media: "(prefers-color-scheme: dark)"
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/weather-sunny
+        name: 切换至浅色模式
+  icon:
+    logo: material/layers-triple
+    repo: octicons/mark-github-16
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+    - content.tabs.link
+    - navigation.footer
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - navigation.sections
+    - search.highlight
+    - search.suggest
+    - toc.follow
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - def_list
+  - footnotes
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+
+extra_css:
+  - css/extra.css
+
+extra:
+  social: []
+
+nav:
+  - 首页: index.md
+  - 阅读说明: guide.md
+
+  - 一、机器与表示:
+    - 概览: ch01/index.md
+    - 比特与整数编码: ch01/bits-integers.md
+    - 浮点与舍入: ch01/floating-point.md
+    - CPU 流水线与乱序执行: ch01/cpu-pipeline.md
+    - 高速缓存与局部性: ch01/cache.md
+    - 虚拟内存与页表: ch01/virtual-memory.md
+    - 存储缓冲与内存序: ch01/memory-ordering.md
+    - 指令集架构概览: ch01/isa-overview.md
+    - x86-64 与 AArch64 对照: ch01/x86-vs-arm.md
+
+  - 二、汇编与二进制:
+    - 概览: ch02/index.md
+    - 段、符号与汇编器指令: ch02/sections-directives.md
+    - 寄存器与标志位: ch02/registers.md
+    - 寻址方式与数据传送: ch02/addressing.md
+    - 指令编码与 RIP 相对寻址: ch02/encoding-rip-relative.md
+    - 控制流与条件码: ch02/control-flow.md
+    - 过程调用与栈帧: ch02/stack-frames.md
+    - System V AMD64 ABI: ch02/sysv-amd64-abi.md
+    - 进程入口与 C 运行时: ch02/crt-entry.md
+    - 系统调用路径: ch02/syscalls.md
+    - 线程局部存储: ch02/tls.md
+    - 原子指令与内存序指令: ch02/atomics-x86.md
+    - 陷阱、信号与异步帧: ch02/exceptions-signals.md
+    - 扩展内联汇编: ch02/inline-asm.md
+    - ELF 文件结构: ch02/elf.md
+    - 静态链接与符号解析: ch02/static-linking.md
+    - 重定位: ch02/relocation.md
+    - 位置无关代码与动态链接: ch02/pic-dynamic.md
+    - 可执行文件装载: ch02/loading.md
+    - 端到端实验：手写 fibonacci: ch02/fib-asm-lab.md
+
+  - 三、编译器与 LLVM:
+    - 概览: ch03/index.md
+    - 前端：词法与语法: ch03/frontend-lexing-parsing.md
+    - 语义分析与 IR 设计动机: ch03/semantic-ir-motivation.md
+    - LLVM IR 核心概念: ch03/llvm-ir.md
+    - SSA 形式与 φ 节点: ch03/ssa.md
+    - 中端优化管线: ch03/midend-passes.md
+    - 后端：指令选择与寄存器分配: ch03/backend-isel-ra.md
+    - 调用约定在 LLVM 中的落地: ch03/llvm-calling-conv.md
+    - 语言语义在 LLVM 边界上的损失: ch03/llvm-semantics-limits.md
+    - clang 与其他前端如何接入 LLVM: ch03/frontends-on-llvm.md
+    - 调试信息与 DWARF: ch03/debug-dwarf.md
+    - 端到端实验：从 C 到 LLVM IR 到目标码: ch03/c-to-asm-lab.md
+
+  - 四、语言共性:
+    - 概览: ch04/index.md
+    - 类型系统轴：静态、动态与渐进: ch04/typing.md
+    - 内存管理轴：手动、所有权、GC、引用计数: ch04/memory-management.md
+    - 追踪式 GC 机制轮廓: ch04/gc-mechanics.md
+    - 求值与执行模型：解释、字节码、JIT、AOT: ch04/evaluation.md
+    - 并发模型：线程、async、actor、CSP: ch04/concurrency.md
+    - 对象表示与运行时布局: ch04/object-layout.md
+    - 派发机制与胖指针: ch04/polymorphism-repr.md
+    - 未定义行为与抽象机: ch04/ub-abstract-machine.md
+    - 互操作与 FFI 边界: ch04/ffi.md
+
+  - 五、语言分论:
+    - 概览: ch05/index.md
+    - C: ch05/c.md
+    - C++: ch05/cpp.md
+    - Rust: ch05/rust.md
+    - Go: ch05/go.md
+    - Java 与 Kotlin: ch05/java.md
+    - C#: ch05/csharp.md
+    - Python: ch05/python.md
+    - JavaScript 与 TypeScript: ch05/javascript.md
+    - Swift: ch05/swift.md
+    - 动态运行时样本：Ruby、PHP、Dart、R: ch05/dynamic-runtimes.md
+    - 跨语言对照表: ch05/cross-language-matrix.md
+
+  - 六、心智图与对话清单:
+    - 概览: ch06/index.md
+    - 从源码到硅片的完整路径: ch06/source-to-silicon.md
+    - 性能数字的读法: ch06/reading-benchmarks.md
+    - 导师对话清单: ch06/advisor-checklists.md
+
+  - 附录:
+    - 术语表: appendix/glossary.md
+    - 工具链速查: appendix/toolchain.md
+    - 推荐读物: appendix/reading.md
+    - 编写规范: appendix/writing-spec.md
+
+  - 规格:
+    - 课程大纲与验收: Spec/outline.md
+    - 口试量规: Spec/oral-rubric.md
