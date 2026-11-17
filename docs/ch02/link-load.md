@@ -10,7 +10,7 @@
 readelf -h a.out
 ```
 
-关键字段：`e_type`（`ET_REL` 可重定位、`ET_EXEC` 可执行、`ET_DYN` 共享库或 PIE）、`e_machine`（`EM_X86_64`）、`e_entry`（入口虚拟地址；`ET_REL` 常为 0）、`e_phoff`/`e_phnum`（程序头）、`e_shoff`/`e_shnum`（节头）。口试「入口为何不是 main」时，`e_entry` 指向的值通常是 `_start`，见 [crt 入口](crt-entry.md)。
+关键字段：`e_type`（`ET_REL` 可重定位、`ET_EXEC` 可执行、`ET_DYN` 共享库或 PIE）、`e_machine`（`EM_X86_64`）、`e_entry`（入口虚拟地址；`ET_REL` 常为 0）、`e_phoff`/`e_phnum`（程序头）、`e_shoff`/`e_shnum`（节头）。`e_entry` 通常指向 `_start`，而不是 `main`，见 [crt 入口](crt-entry.md)。
 
 ### 节头表：链接视图
 
@@ -223,7 +223,7 @@ LD_DEBUG=bindings ./a.out # 观察首次解析（调试用）
 
 装载把 ELF 文件中的 `PT_LOAD` 段映射进进程地址空间，设置入口寄存器/栈，并把控制交给用户态入口。动态链接程序还要先装入解释器。本页与 [crt 入口](crt-entry.md) 分工：这里写内核与映射，那边写 `_start` 到 `main`。
 
-### execve 之后内核做的事
+### execve 与地址空间替换
 
 `execve` 成功时，内核替换当前进程的地址空间：
 
@@ -257,7 +257,7 @@ cat /proc/self/maps
 
 `readelf -l` 给文件内的建议虚拟地址与权限；`/proc/self/maps` 给运行时实际映射，包括 `[stack]`、`[vdso]`、`[vvar]`、匿名堆与每个 `.so` 的基址。PIE 下 `a.out` 的文本基址每次可能不同，与 `objdump` 打印的「链接地址」之间差一个运行时 slide；用 RIP-relative 与辅助向量才能在无硬编码基址的情况下工作。
 
-### 与 crt 的衔接
+### 装载之后的用户态入口
 
 完整短答结构：
 
