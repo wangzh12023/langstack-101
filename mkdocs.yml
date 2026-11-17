@@ -1,5 +1,5 @@
 site_name: 语言栈 101
-site_description: 汇编、编译器、运行时与主流语言实现
+site_description: 一段程序如何变成可讨论的机器行为
 site_author: Zihan
 site_url: https://localhost/langstack-101/
 repo_name: langstack-101
@@ -52,6 +52,8 @@ markdown_extensions:
   - footnotes
   - tables
   - pymdownx.details
+  - pymdownx.arithmatex:
+      generic: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -76,99 +78,61 @@ markdown_extensions:
 
 extra_css:
   - css/extra.css
+  - https://unpkg.com/katex@0.16.11/dist/katex.min.css
+
+extra_javascript:
+  - https://unpkg.com/katex@0.16.11/dist/katex.min.js
+  - https://unpkg.com/katex@0.16.11/dist/contrib/auto-render.min.js
+  - javascripts/katex.js
 
 extra:
   social: []
 
+# 导航按「读者在整条路径上走到哪一步」组织，不按术语表展开。
 nav:
   - 首页: index.md
-  - 阅读说明: guide.md
+  - 怎么读: guide.md
 
-  - 一、机器与表示:
-    - 概览: ch01/index.md
-    - 比特与整数编码: ch01/bits-integers.md
-    - 浮点与舍入: ch01/floating-point.md
-    - CPU 流水线与乱序执行: ch01/cpu-pipeline.md
-    - 高速缓存与局部性: ch01/cache.md
-    - 虚拟内存与页表: ch01/virtual-memory.md
-    - 存储缓冲与内存序: ch01/memory-ordering.md
-    - 指令集架构概览: ch01/isa-overview.md
-    - x86-64 与 AArch64 对照: ch01/x86-vs-arm.md
+  - 一、机器在算什么:
+    - 这一章的位置: ch01/index.md
+    - 整数与浮点: ch01/numbers.md
+    - 执行、存储与指令契约: ch01/machine.md
 
-  - 二、汇编与二进制:
-    - 概览: ch02/index.md
-    - 段、符号与汇编器指令: ch02/sections-directives.md
-    - 寄存器与标志位: ch02/registers.md
-    - 寻址方式与数据传送: ch02/addressing.md
-    - 指令编码与 RIP 相对寻址: ch02/encoding-rip-relative.md
-    - 控制流与条件码: ch02/control-flow.md
-    - 过程调用与栈帧: ch02/stack-frames.md
-    - System V AMD64 ABI: ch02/sysv-amd64-abi.md
-    - 进程入口与 C 运行时: ch02/crt-entry.md
-    - 系统调用路径: ch02/syscalls.md
-    - 线程局部存储: ch02/tls.md
-    - 原子指令与内存序指令: ch02/atomics-x86.md
-    - 陷阱、信号与异步帧: ch02/exceptions-signals.md
-    - 扩展内联汇编: ch02/inline-asm.md
-    - ELF 文件结构: ch02/elf.md
-    - 静态链接与符号解析: ch02/static-linking.md
-    - 重定位: ch02/relocation.md
-    - 位置无关代码与动态链接: ch02/pic-dynamic.md
-    - 可执行文件装载: ch02/loading.md
-    - 端到端实验：手写 fibonacci: ch02/fib-asm-lab.md
+  - 二、从汇编到正在运行的进程:
+    - 这一章的位置: ch02/index.md
+    - 指令级程序: ch02/instructions.md
+    - 函数怎样互相调用: ch02/calling.md
+    - 怎样变成进程里的映像: ch02/link-load.md
+    - 跟内核交接时还会碰到的事: ch02/kernel-boundary.md
+    - 实验：手写 fibonacci: ch02/fib-asm-lab.md
 
-  - 三、编译器与 LLVM:
-    - 概览: ch03/index.md
-    - 前端：词法与语法: ch03/frontend-lexing-parsing.md
-    - 语义分析与 IR 设计动机: ch03/semantic-ir-motivation.md
-    - LLVM IR 核心概念: ch03/llvm-ir.md
-    - SSA 形式与 φ 节点: ch03/ssa.md
-    - 中端优化管线: ch03/midend-passes.md
-    - 后端：指令选择与寄存器分配: ch03/backend-isel-ra.md
-    - 调用约定在 LLVM 中的落地: ch03/llvm-calling-conv.md
-    - 语言语义在 LLVM 边界上的损失: ch03/llvm-semantics-limits.md
-    - clang 与其他前端如何接入 LLVM: ch03/frontends-on-llvm.md
-    - 调试信息与 DWARF: ch03/debug-dwarf.md
-    - 端到端实验：从 C 到 LLVM IR 到目标码: ch03/c-to-asm-lab.md
+  - 三、编译器怎样改写这条路径:
+    - 这一章的位置: ch03/index.md
+    - 中间表示与优化: ch03/ir-and-opt.md
+    - 生成机器码与对着调试: ch03/backend-and-debug.md
+    - 实验：C 到 IR 到目标码: ch03/c-to-asm-lab.md
 
-  - 四、语言共性:
-    - 概览: ch04/index.md
-    - 类型系统轴：静态、动态与渐进: ch04/typing.md
-    - 内存管理轴：手动、所有权、GC、引用计数: ch04/memory-management.md
-    - 追踪式 GC 机制轮廓: ch04/gc-mechanics.md
-    - 求值与执行模型：解释、字节码、JIT、AOT: ch04/evaluation.md
-    - 并发模型：线程、async、actor、CSP: ch04/concurrency.md
-    - 对象表示与运行时布局: ch04/object-layout.md
-    - 派发机制与胖指针: ch04/polymorphism-repr.md
-    - 未定义行为与抽象机: ch04/ub-abstract-machine.md
-    - 互操作与 FFI 边界: ch04/ffi.md
+  - 四、比较语言时看哪些面:
+    - 这一章的位置: ch04/index.md
+    - 类型、内存、执行方式: ch04/axes-core.md
+    - 并发、对象、正确性边界与 FFI: ch04/axes-boundary.md
 
-  - 五、语言分论:
-    - 概览: ch05/index.md
-    - C: ch05/c.md
-    - C++: ch05/cpp.md
-    - Rust: ch05/rust.md
-    - Go: ch05/go.md
-    - Java 与 Kotlin: ch05/java.md
-    - C#: ch05/csharp.md
-    - Python: ch05/python.md
-    - JavaScript 与 TypeScript: ch05/javascript.md
-    - Swift: ch05/swift.md
-    - 动态运行时样本：Ruby、PHP、Dart、R: ch05/dynamic-runtimes.md
-    - 跨语言对照表: ch05/cross-language-matrix.md
+  - 五、具体语言怎样落下来:
+    - 这一章的位置: ch05/index.md
+    - C、C++、Rust、Go: ch05/systems.md
+    - JVM、.NET、Swift: ch05/managed.md
+    - Python、JavaScript 与其他动态运行时: ch05/dynamic.md
+    - 用同一张表读跨语言数字: ch05/cross-language-matrix.md
 
-  - 六、心智图与对话清单:
-    - 概览: ch06/index.md
-    - 从源码到硅片的完整路径: ch06/source-to-silicon.md
-    - 性能数字的读法: ch06/reading-benchmarks.md
-    - 导师对话清单: ch06/advisor-checklists.md
+  - 六、串起来:
+    - 从源码到硅片: ch06/source-to-silicon.md
+    - 性能数字怎么读: ch06/reading-benchmarks.md
+    - 对话时能指回的事实: ch06/advisor-checklists.md
 
   - 附录:
     - 术语表: appendix/glossary.md
     - 工具链速查: appendix/toolchain.md
     - 推荐读物: appendix/reading.md
     - 编写规范: appendix/writing-spec.md
-
-  - 规格:
-    - 课程大纲与验收: Spec/outline.md
     - 口试量规: Spec/oral-rubric.md
+    - 旧版细目存档说明: Spec/legacy-pages.md
