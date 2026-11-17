@@ -1,5 +1,5 @@
 site_name: 语言栈 101
-site_description: 一段程序如何变成可讨论的机器行为
+site_description: 程序文本到机器行为的实现路径
 site_author: Zihan
 site_url: https://localhost/langstack-101/
 repo_name: langstack-101
@@ -91,34 +91,34 @@ extra:
 # 导航按「读者在整条路径上走到哪一步」组织，不按术语表展开。
 nav:
   - 首页: index.md
-  - 怎么读: guide.md
+  - 阅读说明: guide.md
 
-  - 一、机器在算什么:
-    - 这一章的位置: ch01/index.md
+  - 一、机器侧的表示与执行:
+    - 本章导读: ch01/index.md
     - 整数与浮点: ch01/numbers.md
     - 执行、存储与指令契约: ch01/machine.md
 
   - 二、从汇编到正在运行的进程:
-    - 这一章的位置: ch02/index.md
+    - 本章导读: ch02/index.md
     - 指令级程序: ch02/instructions.md
-    - 函数怎样互相调用: ch02/calling.md
-    - 怎样变成进程里的映像: ch02/link-load.md
-    - 跟内核交接时还会碰到的事: ch02/kernel-boundary.md
+    - 函数调用与 ABI: ch02/calling.md
+    - 链接、装载与进程映像: ch02/link-load.md
+    - 内核边界上的接口: ch02/kernel-boundary.md
     - 实验：手写 fibonacci: ch02/fib-asm-lab.md
 
-  - 三、编译器怎样改写这条路径:
-    - 这一章的位置: ch03/index.md
+  - 三、编译器对执行路径的改写:
+    - 本章导读: ch03/index.md
     - 中间表示与优化: ch03/ir-and-opt.md
     - 生成机器码与对着调试: ch03/backend-and-debug.md
     - 实验：C 到 IR 到目标码: ch03/c-to-asm-lab.md
 
-  - 四、比较语言时看哪些面:
-    - 这一章的位置: ch04/index.md
+  - 四、跨语言比较的几条轴:
+    - 本章导读: ch04/index.md
     - 类型、内存、执行方式: ch04/axes-core.md
     - 并发、对象、正确性边界与 FFI: ch04/axes-boundary.md
 
-  - 五、具体语言怎样落下来:
-    - 这一章的位置: ch05/index.md
+  - 五、各语言的实现落点:
+    - 本章导读: ch05/index.md
     - C、C++、Rust、Go: ch05/systems.md
     - JVM、.NET、Swift: ch05/managed.md
     - Python、JavaScript 与其他动态运行时: ch05/dynamic.md
@@ -126,7 +126,7 @@ nav:
 
   - 六、串起来:
     - 从源码到硅片: ch06/source-to-silicon.md
-    - 性能数字怎么读: ch06/reading-benchmarks.md
+    - 性能数字的读法: ch06/reading-benchmarks.md
     - 对话时能指回的事实: ch06/advisor-checklists.md
 
   - 附录:

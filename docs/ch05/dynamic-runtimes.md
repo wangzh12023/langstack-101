@@ -23,7 +23,7 @@
 | Dart | JIT 与 AOT 双主路径 | isolate 消息传递 | 每 isolate 追踪 GC |
 | R | 解释 + 向量原语；惰性 promise | 单线程为主；数值进本地库 | GC；COW 向量语义 |
 
-## 同算法压力下会踩到什么
+## 同算法路径上的常见差异
 
 若用朴素递归 fib 一类标量算法压四者，Ruby/PHP/R 主要暴露字节码/解释派发、调用约定与装箱或向量盒子开销；PHP 还叠请求引导是否计入；R 额外暴露「没用向量化」的错位。Dart AOT 更接近托管静态语言的调用与分配形态，JIT 路径则要算 warmup。把 [benjdd.com/languages](https://benjdd.com/languages/) 一类榜单当问题清单时，应追问：是否测到了 PHP 的请求外开销、Dart 的 AOT 还是 JIT、R 是否在标量递归上与语言设计意图错位——而不是把名次当成实现质量排序。
 

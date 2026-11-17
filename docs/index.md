@@ -4,7 +4,7 @@
 
 <div class="grid cards" markdown>
 
--   :material-cpu-64-bit: **机器在算什么**
+-   :material-cpu-64-bit: **机器侧的表示与执行**
 
     ---
 
@@ -38,4 +38,4 @@
 
 </div>
 
-读法与依赖见 [怎么读](guide.md)。能和导师把机制谈清楚的自测标准见 [口试量规](Spec/oral-rubric.md)。
+读法与依赖见 [阅读说明](guide.md)。能和导师把机制谈清楚的自测标准见 [口试量规](Spec/oral-rubric.md)。
