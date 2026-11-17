@@ -6,7 +6,7 @@ LLVM 是 IR、优化通道与可重定向后端的共享库集合；完整语言
 
 clang 是 C/C++/Objective-C 的官方 LLVM 前端。预处理与语法/语义在 clang 侧完成；CodeGen 遍历 AST，发射函数、全局量、调试元数据与 TBAA 等。用户命令 `clang -emit-llvm` 停在 IR；默认链接驱动则继续跑中端与后端，再调系统汇编器/链接器。C 的 UB 边界、`restrict`、有符号溢出等，在 CodeGen 时变成 `nsw`/`nuw`、`noalias` 等，见 [语言语义在 LLVM 边界上的损失](llvm-semantics-limits.md)。
 
-同一驱动也负责选择目标三元组、CPU 特性与优化等级，把 `-O2` 映射到一组 pass pipeline。对口试而言：clang = 语言前端 + 对 LLVM API 的驱动；「LLVM」一词有时被口语用来指整条 clang 管线，技术上应区分前后端归属。
+同一驱动也负责选择目标三元组、CPU 特性与优化等级，把 `-O2` 映射到一组 pass pipeline。clang = 语言前端 + 对 LLVM API 的驱动；「LLVM」一词有时被口语用来指整条 clang 管线，技术上应区分前后端归属。
 
 ## rustc 与其他接入方式
 

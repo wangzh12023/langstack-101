@@ -24,4 +24,4 @@
 
 C/clang 默认 `ccc`，与平台 C ABI 对齐，便于与手写汇编、其他 C 目标文件互链。Rust、Swift 等对内部函数可能使用更快的私有约定，在对外 `extern "C"` 边界再切回 C ABI；这种切换表现为不同函数上的约定属性，由前端显式标出。异常与人格（personality）相关的调用（`invoke`）还要与 unwind 表一致，细节超出本页，但同样属于「约定 + 运行时」而不只是寄存器表。
 
-口试串联：[SysV 寄存器表](../ch02/sysv-amd64-abi.md) 回答「机器上怎么传」；本页回答「LLVM 如何在 IR 属性里声明、在后端落实」；[语言语义边界](llvm-semantics-limits.md) 回答「别名等非布局类信息如何另附」。
+[SysV 寄存器表](../ch02/sysv-amd64-abi.md) 回答「机器上怎么传」；本页回答「LLVM 如何在 IR 属性里声明、在后端落实」；[语言语义边界](llvm-semantics-limits.md) 回答「别名等非布局类信息如何另附」。

@@ -14,7 +14,7 @@ C++ 在 C 的抽象机与 UB 传统上叠加**对象模型**（构造、析构�
 
 存储期仍分静态、线程、自动、动态；动态侧是 `new`/`delete` 与分配器，属手动管理上的结构化写法。**RAII** 把资源释放绑到析构函数与作用域结束，不改变「谁负责释放」的谱系归属。对象生命周期从构造完成开始、到析构开始结束；在生命周期外访问、或未启动生命周期就当对象用，落入 UB。
 
-带虚函数的类对象通常含 **vptr**；虚调用路径是 load vptr → 取函数指针 → 间接 call，见 [派发机制](../ch04/polymorphism-repr.md)。多重继承与虚继承引入 thunk、`this` 调整与更复杂的 vtable / VTT 布局——口试级描述以「单继承虚调用 + this 调整存在」为底线，细节以 Itanium ABI 原文为准。成员布局遵循 ABI 的基类与成员排列规则，padding 与尾填充影响 `sizeof`；标准布局（standard-layout）类型才适合与 C 结构体在 FFI 上对穿。
+带虚函数的类对象通常含 **vptr**；虚调用路径是 load vptr → 取函数指针 → 间接 call，见 [派发机制](../ch04/polymorphism-repr.md)。多重继承与虚继承引入 thunk、`this` 调整与更复杂的 vtable / VTT 布局——讨论时至少要能说明「单继承虚调用 + this 调整存在」为底线，细节以 Itanium ABI 原文为准。成员布局遵循 ABI 的基类与成员排列规则，padding 与尾填充影响 `sizeof`；标准布局（standard-layout）类型才适合与 C 结构体在 FFI 上对穿。
 
 ## 并发与运行时调度
 

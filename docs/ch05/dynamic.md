@@ -1,13 +1,6 @@
 # Python、JavaScript 与其他动态运行时
 
-
-动态类型与解释/字节码路径会把「一次加法」变成完全不同的机器故事。先读 Python 与 JS/TS，再看 Ruby/PHP/Dart/R 作为同一类问题的四个样本，避免目录里再并列四套平行百科。
-
-
-![Python](../assets/svg/python.svg){ width="40" }
-
-
-CPython 把源码编成字节码，由求值循环解释执行；对象模型以堆上 `PyObject` 为准，主回收路径是引用计数，辅以周期检测。同算法相对 C/Rust 出数量级差距时，通常同时叠了字节码派发、装箱整数、函数调用约定与分配，而不是单一「解释器税」。轴见 [求值与执行模型](../ch04/evaluation.md)、[内存管理轴](../ch04/memory-management.md)、[对象布局](../ch04/object-layout.md)。
+动态类型与字节码/解释路径会改变一次加法或一次调用实际执行的机器操作。先写 Python 与 JavaScript/TypeScript，再用 Ruby、PHP、Dart、R 作对照样本。
 
 ### 实现谱系与执行管线
 
@@ -54,9 +47,7 @@ CPython 的 **GIL**（全局解释器锁）保证同一时刻大致只有一个�
 - 列表存一万个 int 的内存图：指针数组 + 各 `PyLongObject`（及缓存命中否）。
 - `async` 不提供并行；并行要落到进程、释 GIL 的 C、或自由线程构建。
 
-
 ![JavaScript](../assets/svg/javascript.svg){ width="40" } ![TypeScript](../assets/svg/typescript.svg){ width="40" }
-
 
 JavaScript 在生产引擎（V8、JavaScriptCore、SpiderMonkey）里走解释/基线编译与优化编译接力，对象模型是动态形状与隐藏类，堆由追踪式 GC 管理。TypeScript 在编译期擦除类型，发出的仍是 JavaScript：运行时语义与性能边界以 JS 引擎为准。轴见 [求值与执行模型](../ch04/evaluation.md)、[类型系统轴](../ch04/typing.md)、[GC 机制](../ch04/gc-mechanics.md)。
 
@@ -111,9 +102,7 @@ TypeScript 提供静态名义/结构混合的检查与编辑器证据，**emit �
 - N-API 句柄寿命；把裸指针存进 JS 又在 GC 后用的故障模式。
 - 跨引擎/跨运行时（Node vs Bun）比分差时，先对齐是否同算法、同整数语义、同 warmup。
 
-
 ![Ruby](../assets/svg/ruby.svg){ width="36" } ![PHP](../assets/svg/php.svg){ width="36" } ![Dart](../assets/svg/dart.svg){ width="36" }
-
 
 四门语言常被放进同一张「动态/脚本」桌子，但默认执行管线与内存纪律差得很远。下面用同一组轴做一次对照样本：谁在字节码循环里、谁在请求结束时扔掉整个堆、谁用 isolate 换共享内存、谁用惰性求值与写时复制把向量语义做成语言核心。轴的定义不重讲，见 [求值与执行模型](../ch04/evaluation.md)、[内存管理轴](../ch04/memory-management.md)、[并发模型](../ch04/concurrency.md)。
 

@@ -1,7 +1,5 @@
-# 串起来
+# 总图与核对
 
-前面分站走完路径；这里收回一张图，并练习两件「用得上」的事：解释别人甩来的性能表，以及对话时把论点指回机制。
-
-- [从源码到硅片](source-to-silicon.md)  
-- [性能数字的读法](reading-benchmarks.md)  
-- [对话时能指回的事实](advisor-checklists.md)
+- [从源码到硅片](source-to-silicon.md)：编译、链接、装载到执行的一张总图
+- [性能数字的读法](reading-benchmarks.md)：跨语言时间差通常对应哪些机制
+- [对话时能指回的事实](advisor-checklists.md)：按主题回链正文

@@ -1,13 +1,6 @@
 # JVM、.NET、Swift
 
-
-托管与 ARC 把对象寿命和部分安全检查挪出程序员的日常路径，同时把对象头、写屏障、JIT/AOT 选择带进基准解释。Kotlin 放在 JVM 叙事里；Swift 的 ARC 与前两者对照着读。
-
-
-![Java](../assets/svg/java.svg){ width="40" } ![Kotlin](../assets/svg/kotlin.svg){ width="40" }
-
-
-JVM 把源语言编成字节码，由 HotSpot（或同类实现）解释、基线编译与 C2/Graal 优化编译接力执行。Kotlin 默认以同一套字节码与运行时为落点；语言表面的空安全、协程、内联类，最终仍映射到对象头、调用约定与调度模型上的具体选择。轴的定义见 [求值与执行模型](../ch04/evaluation.md)、[内存管理轴](../ch04/memory-management.md)、[追踪式 GC](../ch04/gc-mechanics.md)。
+托管运行时与 ARC 把对象寿命和一部分检查移出源码里的显式 `free`。Kotlin 放在 JVM 一节；Swift 的 ARC 与追踪式 GC 对照着写。
 
 ### 实现谱系与执行管线
 
@@ -69,9 +62,7 @@ Kotlin/Native 另有与 LLVM 的互操作与不同的内存模型；本页默认
 - 泛型擦除的后果：不能 `new T()`、数组协变与运行时 `ClassCastException` 检查落在边界上。
 - Compressed Oops、对象头大小如何影响「创建大量小对象」的基准；追问堆参数与收集器名。
 
-
 ![C#](../assets/svg/csharp.svg){ width="40" }
-
 
 C# 落在 CLR（.NET 运行时）上：源码编成 CIL（MSIL），由 RyuJIT 等在加载或首次执行时编成机器码，堆由追踪式 GC 管理。与 JVM 同属「托管字节码 + JIT + GC」谱系，但值类型、泛型具体化、委托与 P/Invoke 的落点不同；轴定义回链 [求值与执行模型](../ch04/evaluation.md)、[GC 机制](../ch04/gc-mechanics.md)、[FFI](../ch04/ffi.md)。
 
@@ -124,9 +115,7 @@ GC 堆对象传给可能持有指针的本地代码前必须钉住（`fixed`、`
 - 钉住与 `GCHandle` 泄漏是托管/本地混合程序的常见正确性故障。
 - Native AOT 下反射与动态加载的裁剪失败模式：编译期看得见的调用图 vs 运行期字符串激活。
 
-
 ![Swift](../assets/svg/swift.svg){ width="40" }
-
 
 Swift 默认走 **LLVM** 后端的 AOT 管线（也可在 REPL/Playground 等场景下即时编译），堆上对象的主路径是 **ARC**（自动引用计数），而不是 JVM/CLR 式追踪式 GC。语言把值语义、写时复制与协议存在性（existential）放进类型系统；与 C / Objective-C 的边界是日常互操作面。共性轴见 [内存管理轴](../ch04/memory-management.md)、[求值与执行模型](../ch04/evaluation.md)、[FFI](../ch04/ffi.md)。
 

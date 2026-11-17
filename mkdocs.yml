@@ -117,17 +117,17 @@ nav:
     - 类型、内存、执行方式: ch04/axes-core.md
     - 并发、对象、正确性边界与 FFI: ch04/axes-boundary.md
 
-  - 五、各语言的实现落点:
+  - 五、各语言的实现:
     - 本章导读: ch05/index.md
     - C、C++、Rust、Go: ch05/systems.md
     - JVM、.NET、Swift: ch05/managed.md
     - Python、JavaScript 与其他动态运行时: ch05/dynamic.md
     - 用同一张表读跨语言数字: ch05/cross-language-matrix.md
 
-  - 六、串起来:
+  - 六、总图与核对:
     - 从源码到硅片: ch06/source-to-silicon.md
     - 性能数字的读法: ch06/reading-benchmarks.md
-    - 对话时能指回的事实: ch06/advisor-checklists.md
+    - 核对清单: ch06/advisor-checklists.md
 
   - 附录:
     - 术语表: appendix/glossary.md

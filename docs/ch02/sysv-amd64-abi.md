@@ -1,6 +1,6 @@
 # System V AMD64 ABI
 
-System V AMD64 ABI 规定 Linux、macOS、BSD 等平台上用户态 C 语言级过程调用的寄存器分工、栈约束与聚合类型传递规则。ISA 只提供 `call`/`ret` 与寄存器；哪些寄存器传第几个参数、谁负责保存、入口处栈如何对齐，全部由本约定约束。口试量规第 1 题的完整答案落在本页与 [栈帧](stack-frames.md)。
+System V AMD64 ABI 规定 Linux、macOS、BSD 等平台上用户态 C 语言级过程调用的寄存器分工、栈约束与聚合类型传递规则。ISA 只提供 `call`/`ret` 与寄存器；哪些寄存器传第几个参数、谁负责保存、入口处栈如何对齐，全部由本约定约束。细节另见 [栈帧](stack-frames.md)。
 
 下文「整数」含指针与 \(\leq 64\) 位整数；浮点指经 SSE 传递的标量（如 `float`/`double`）。复杂聚合的完整分类算法以规范原文为准，此处给出口试与读汇编所需的工作模型。
 
@@ -98,7 +98,7 @@ struct Big h(void);
 
 参数方向的小结构体按字段拆分进可用的整数/XMM 寄存器；拆分失败则整颗入栈。精确到每个字段的八字节分类以 ABI 文档的 ALGORITHM 为准；能陈述「\(\leq 16\) 可走寄存器、更大走隐藏指针」即可定位大多数反汇编现象。
 
-## 口试叙事示例
+## 调用路径示例
 
 给定：
 
@@ -106,7 +106,7 @@ struct Big h(void);
 double h(double x, double y, long n);
 ```
 
-调用方在 `call h` 之前：`%xmm0=x`，`%xmm1=y`，`%rdi=n`，且 \(\texttt{rsp} \equiv 0 \pmod{16}\)。`call` 压入返回地址后进入 `h`，此时 \(\texttt{rsp} \equiv 8 \pmod{16}\)，`(%rsp)` 为返回地址。若 `h` 为叶子并只用红区与 caller-saved 寄存器，可无 `subq`；若 `h` 还调用别人，须调整 `%rsp` 并保存用到的 callee-saved。返回时标量结果在 `%xmm0`，`ret` 弹出返回地址。把这一段与 [栈帧](stack-frames.md) 的图合说，即覆盖口试量规第 1 题的主干。
+调用方在 `call h` 之前：`%xmm0=x`，`%xmm1=y`，`%rdi=n`，且 \(\texttt{rsp} \equiv 0 \pmod{16}\)。`call` 压入返回地址后进入 `h`，此时 \(\texttt{rsp} \equiv 8 \pmod{16}\)，`(%rsp)` 为返回地址。若 `h` 为叶子并只用红区与 caller-saved 寄存器，可无 `subq`；若 `h` 还调用别人，须调整 `%rsp` 并保存用到的 callee-saved。返回时标量结果在 `%xmm0`，`ret` 弹出返回地址。与 [栈帧](stack-frames.md) 中的图对照即可核对一次完整调用。
 
 再对照整数版 `long f(long a, long b)`：参数在 `%rdi`/`%rsi`，返回在 `%rax`；其余栈对齐与保存责任相同。浮点与整数寄存器分别编号：混传时各自从 `%xmm0`、`%rdi` 起算，互不挤占对方的槽位。
 

@@ -1,6 +1,6 @@
 # 导师对话清单
 
-按三个主题域自测。每条回链到正文；不能只背短语。口试题全文见 [口试量规](../Spec/oral-rubric.md)。
+按主题核对。每条链到正文。完整题目见 [口试量规](../Spec/oral-rubric.md)。
 
 ## 系统与 ABI
 
@@ -30,4 +30,4 @@
 ## 基准
 
 - 对朴素递归 fibonacci，列出至少四条会改变跨语言名次解释的因素（整数语义、优化是否改写算法、JIT warmup、调用开销、GC/分配等）。[性能数字的读法](reading-benchmarks.md)
-- 把「谁最快」改述成「谁在这条路径上贴近何种机器行为」。[跨语言对照表](../ch05/cross-language-matrix.md) · [源码到硅片](source-to-silicon.md)
+- 把名次解释成具体机制（调用、分配、整数、JIT 等）。[跨语言对照表](../ch05/cross-language-matrix.md) · [源码到硅片](source-to-silicon.md)
